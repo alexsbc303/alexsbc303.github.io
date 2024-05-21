@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Robocon Hong Kong 2024 全港大專生機械人大賽</title>
+  <link rel="stylesheet" href="index.css" />
+  <script type="text/javascript" src="index.js"></script>
+</head>
+
+<body>
+  <main>
+
+    <audio id="audio_beep" src="files/beep.wav"></audio>
+    <audio id="audio_beep2" src="files/beep2.wav"></audio>
+    <audio id="audio_stop" src="files/stop.wav"></audio>
+    <audio id="audio_winning" src="files/winning.wav"></audio>
+    <audio id="audio_winning2" src="files/winning2.wav"></audio>
+    <audio id="audio_winning3" src="files/winning3.wav"></audio>
+    <audio id="audio_end" src="files/end.wav"></audio>
+
+    <div class="wrapper">
+      <div class="left-container">
+        <div class="timer-container">
+          <div>Timer</div>
+          <div id="timer" class="timer">---</div>
+          <div>sec</div>
+        </div>
+        <div class="btn-container">
+          <button id="gameTimer" onClick="myTimer.start()">Start</button>
+          <button id="pause" onClick="myTimer.pause()" disabled>Pause</button>
+          <button id="reset" onClick="myTimer.reset()">Reset</button>
+        </div>
+        <div class="reset-container"><button onClick="resetAll()">Reset All</button>
+          <button onClick="area3.clearAll()">Reset Area3</button>
+        </div>
+      </div>
+      <div>
+        <table id="main_table" width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td width="40%" bgcolor="#A83025" valign="top" align="center">
+              <table border="0" align="center" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                  <td align="left" width="20%">
+                    <img id="redTeamLogo" height="120" width="120" src="images/transparent.png" border="0"></img>
+                  </td>
+                  <td align="left">
+                    <select id="redTeamName" onchange="changeTeamLogo('red')">
+                      <option value="transparent.png">&nbsp;</option>
+                      <option value="cityu.jpg">工城者</option>
+                      <option value="polyu.jpg">紅彗</option>
+                      <option value="cuhk.jpg">黃金入球</option>
+                      <option value="ive.jpg">神機妙算</option>
+                      <option value="hkust.jpg">征龍</option>
+                      <option value="hku.jpg">明德</option>
+                      <option value="hkust.jpg">火之龍</option>
+                      <option value="ive.jpg">疫境傳奇</option>
+                      <option value="cityu.jpg">計城者</option>
+                      <option value="cuhk.jpg">層出不窮</option>
+                      <option value="eduhk.jpg">魯師</option>
+                      <option value="polyu.jpg">赤影</option>
+                      <option value="hku.jpg">格物</option>
+                      <option value="lnu.jpg">虎地貓</option>
+                    </select>
+                  </td>
+                  <td align="center">
+                    <br>
+                    <font color="white">Total Score</font>
+                    <font color="white">
+                      <div id="redTeamScore" style="font-size:100px; font-weight:bold; width:170px;">0</div>
+                    </font>
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td width="40%" bgcolor="#264D7D" valign="top" align="center">
+              <table border="0" align="center" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                  <td align="left" width="20%">
+                    <img id="blueTeamLogo" height="120" width="120" src="images/transparent.png" border="0"></img>
+                  </td>
+                  <td align="left">
+                    <select id="blueTeamName" onchange="changeTeamLogo('blue')">
+                      <option value="transparent.png">&nbsp;</option>
+                      <option value="cityu.jpg">工城者</option>
+                      <option value="polyu.jpg">紅彗</option>
+                      <option value="cuhk.jpg">黃金入球</option>
+                      <option value="ive.jpg">神機妙算</option>
+                      <option value="hkust.jpg">征龍</option>
+                      <option value="hku.jpg">明德</option>
+                      <option value="hkust.jpg">火之龍</option>
+                      <option value="ive.jpg">疫境傳奇</option>
+                      <option value="cityu.jpg">計城者</option>
+                      <option value="cuhk.jpg">層出不窮</option>
+                      <option value="eduhk.jpg">魯師</option>
+                      <option value="polyu.jpg">赤影</option>
+                      <option value="hku.jpg">格物</option>
+                      <option value="lnu.jpg">虎地貓</option>
+                    </select>
+                  </td>
+                  <td align="center">
+                    <br>
+                    <font color="white">Total Score</font>
+                    <font color="white">
+                      <div id="blueTeamScore" style="font-size:100px; font-weight:bold; width:170px;">0</div>
+                    </font>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" class="area_title">AREA 1</td>
+          </tr>
+          <tr>
+            <td bgcolor="#A83025" valign="middle" align="center">
+              <div class="area">
+                <button id="area1_m_btn_red" class="square-btn" onClick="red.areaOneMinus()" disabled>
+                  -
+                </button>
+                <div id="area1_mark_red" class="area-mark">0</div>
+                <button id="area1_p_btn_red" class="square-btn" onClick="red.areaOnePlus()">
+                  +
+                </button>
+              </div>
+            </td>
+            <td bgcolor="#264D7D" valign="middle" align="center">
+              <div class="area">
+                <button id="area1_m_btn_blue" class="square-btn" onClick="blue.areaOneMinus()" disabled>
+                  -
+                </button>
+                <div id="area1_mark_blue" class="area-mark">0</div>
+                <button id="area1_p_btn_blue" class="square-btn" onClick="blue.areaOnePlus()">
+                  +
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" class="area_title">AREA 2</td>
+          </tr>
+          <tr>
+            <td bgcolor="#A83025" valign="middle" align="center">
+              <div class="area">
+                <button id="area2_m_btn_red" class="square-btn" onClick="red.areaTwoMinus()" disabled>
+                  -
+                </button>
+                <div id="area2_mark_red" class="area-mark">0</div>
+                <button id="area2_p_btn_red" class="square-btn" onClick="red.areaTwoPlus()" disabled>
+                  +
+                </button>
+              </div>
+            </td>
+            <td bgcolor="#264D7D" valign="middle" align="center">
+              <div class="area">
+                <button id="area2_m_btn_blue" class="square-btn" onClick="blue.areaTwoMinus()" disabled>
+                  -
+                </button>
+                <div id="area2_mark_blue" class="area-mark">0</div>
+                <button id="area2_p_btn_blue" class="square-btn" onClick="blue.areaTwoPlus()" disabled>
+                  +
+                </button>
+              </div>
+            </td>
+          </tr>
+          </tr>
+          <tr>
+            <td colspan="2" class="area_title">AREA 3</td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <div class="area3-wrapper">
+                <!-- row 2 -->
+                <div>
+                  <div class="block" id="b-20"></div><button id="r-20" onClick="area3.clear(2,0)" disabled>X</button>
+                </div>
+                <div>
+                  <div class="block" id="b-21"></div><button id="r-21" onClick="area3.clear(2,1)" disabled>X</button>
+                </div>
+                <div>
+                  <div class="block" id="b-22"></div><button id="r-22" onClick="area3.clear(2,2)" disabled>X</button>
+                </div>
+                <div>
+                  <div class="block" id="b-23"></div><button id="r-23" onClick="area3.clear(2,3)" disabled>X</button>
+                </div>
+                <div>
+                  <div class="block" id="b-24"></div><button id="r-24" onClick="area3.clear(2,4)" disabled>X</button>
+                </div>
+                <!-- row 1 -->
+                <div>
+                  <div class="block" id="b-10"></div><button id="r-10" onClick="area3.clear(1,0)" disabled>X</button>
+                </div>
+                <div>
+                  <div class="block" id="b-11"></div><button id="r-11" onClick="area3.clear(1,1)" disabled>X</button>
+                </div>
+                <div>
+                  <div class="block" id="b-12"></div><button id="r-12" onClick="area3.clear(1,2)" disabled>X</button>
+                </div>
+                <div>
+                  <div class="block" id="b-13"></div><button id="r-13" onClick="area3.clear(1,3)" disabled>X</button>
+                </div>
+                <div>
+                  <div class="block" id="b-14"></div><button id="r-14" onClick="area3.clear(1,4)" disabled>X</button>
+                </div>
+                <!-- row 0 -->
+                <div>
+                  <div class="block" id="b-00"></div><button id="r-00" onClick="area3.clear(0,0)" disabled>X</button>
+                </div>
+                <div>
+                  <div class="block" id="b-01"></div><button id="r-01" onClick="area3.clear(0,1)" disabled>X</button>
+                </div>
+                <div>
+                  <div class="block" id="b-02"></div><button id="r-02" onClick="area3.clear(0,2)" disabled>X</button>
+                </div>
+                <div>
+                  <div class="block" id="b-03"></div><button id="r-03" onClick="area3.clear(0,3)" disabled>X</button>
+                </div>
+                <div>
+                  <div class="block" id="b-04"></div><button id="r-04" onClick="area3.clear(0,4)" disabled>X</button>
+                </div>
+                <div class="selection">
+                  <button id="area3-b0-red" onClick="area3.set('0','red')">Red</button>
+                  <button id="area3-b0-blue" onClick="area3.set('0','blue')">Blue</button>
+                </div>
+                <div class="selection">
+                  <button id="area3-b1-red" onClick="area3.set('1','red')">Red</button>
+                  <button id="area3-b1-blue" onClick="area3.set('1','blue')">Blue</button>
+                </div>
+                <div class="selection">
+                  <button id="area3-b2-red" onClick="area3.set('2','red')">Red</button>
+                  <button id="area3-b2-blue" onClick="area3.set('2','blue')">Blue</button>
+                </div>
+                <div class="selection">
+                  <button id="area3-b3-red" onClick="area3.set('3','red')">Red</button>
+                  <button id="area3-b3-blue" onClick="area3.set('3','blue')">Blue</button>
+                </div>
+                <div class="selection">
+                  <button id="area3-b4-red" onClick="area3.set('4','red')">Red</button>
+                  <button id="area3-b4-blue" onClick="area3.set('4','blue')">Blue</button>
+                </div>
+            </td>
+          </tr>
+
+        </table>
+      </div>
+    </div>
+  </main>
+</body>
+
+</html>

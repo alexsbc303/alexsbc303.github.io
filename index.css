@@ -1,0 +1,203 @@
+body,
+td,
+th {
+  font-family: Arial, Helvetica, sans-serif;
+  color: black;
+  font-size: 16px;
+}
+
+select#redTeamName {
+  background-color: #a83025;
+  width: 200px;
+  height: 120px;
+  font-size: 40px;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+  font-family: tahoma, sans-serif;
+}
+
+select#blueTeamName {
+  background-color: #264d7d;
+  width: 200px;
+  height: 120px;
+  font-size: 40px;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+  font-family: tahoma, sans-serif;
+}
+
+button {
+  border: none;
+  padding: 10px 15px;
+  font-family: tahoma, sans-serif;
+  font-size: 14px;
+  text-align: center;
+  border-radius: 4px;
+  color: black;
+  background-color: #f1c40f;
+  transition-duration: 0.4s;
+}
+
+button:hover {
+  background-color: #f9e79f;
+}
+
+button:disabled {
+  background-color: #b7950b;
+  opacity: 0.5;
+  /* background-color: transparent; */
+}
+
+td.area_title {
+  text-align: center;
+  background-color: white;
+}
+
+#main_table td {
+  padding: 0.5rem;
+}
+
+div.area {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+button.square-btn {
+  height: 100px;
+  width: 100px;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  font-size: 1.5rem;
+}
+
+div.wrapper {
+  padding: 0.5rem;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-column-gap: 0.5rem;
+  grid-row-gap: 0.5rem;
+  background-color: #3e2723;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 1600px;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100%;
+  height: 100vh;
+}
+
+main {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  padding: 2rem;
+}
+
+div.wrapper > div {
+  background-color: lightgray;
+}
+
+div.timer-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #eaeded;
+  padding: 1rem;
+}
+
+div.btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  background-color: #48c9b0;
+}
+
+div.btn-container > button {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  height: 50px;
+  width: 70px;
+}
+
+div.timer {
+  font-size: 100px;
+  font-weight: bold;
+}
+
+.area-mark {
+  font-size: 75px;
+  width: 90px;
+}
+
+.area3-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  gap: 1rem;
+  justify-items: center;
+  align-items: center;
+}
+
+.area3-wrapper > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.area3-wrapper > div > div.block {
+  height: 50px;
+  width: calc(50px * 1.618);
+  display: inline-block;
+  margin-right: 1rem;
+  background-color: white;
+  border: black 1px solid;
+}
+
+.area3-wrapper > div > button {
+  height: 50px;
+  width: 50px;
+}
+
+.area3-wrapper > div.selection {
+  width: 100%;
+}
+
+.area3-wrapper > div.selection > button {
+  width: 50%;
+  margin: 0 0.5rem 0 0.5rem;
+}
+
+.reset-container {
+  flex: 1 0 auto;
+  justify-content: space-around;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.reset-container > button {
+  height: 100px;
+  width: calc(100px * 1.618);
+}
+
+.left-container {
+  display: flex;
+  flex-direction: column;
+}
