@@ -1,5 +1,8 @@
-const RED_COLOR_HEXCODE = "#A83025";
-const BLUE_COLOR_HEXCODE = "#264D7D";
+// const RED_COLOR_HEXCODE = "#A83025";
+// const BLUE_COLOR_HEXCODE = "#264D7D";
+const RED_COLOR_HEXCODE = "#ff0000";
+const BLUE_COLOR_HEXCODE = "#116fff";
+const DEFAULT_HEXCODE = "#f1c40f";
 
 function Area3() {
   const blocks = [
@@ -7,6 +10,37 @@ function Area3() {
     [null, null, null, null, null],
     [null, null, null, null, null],
   ];
+
+  function displayWinner() {
+    const result = red.score - blue.score;
+    // red team win
+    if (result > 0) {
+      document.getElementById("audio_winning").play();
+      document.getElementById("winner").innerHTML = "Red Team Win!";
+      document.getElementById("popup").style.backgroundColor =
+        RED_COLOR_HEXCODE;
+      document.getElementById("popup").style.display = "flex";
+    }
+    // blue team win
+    else if (result < 0) {
+      document.getElementById("audio_winning").play();
+      document.getElementById("winner").innerHTML = "Blue Team Win!";
+      document.getElementById("popup").style.backgroundColor =
+        BLUE_COLOR_HEXCODE;
+      document.getElementById("popup").style.display = "flex";
+    }
+    // draw game
+    else if (result == 0) {
+      document.getElementById("audio_draw").play();
+      document.getElementById("winner").innerHTML = "Draw Game!";
+      document.getElementById("popup").style.backgroundColor = DEFAULT_HEXCODE;
+      document.getElementById("popup").style.display = "flex";
+    } else {
+      document.getElementById("winner").innerHTML = "Unknown Status";
+      document.getElementById("popup").style.backgroundColor = DEFAULT_HEXCODE;
+      document.getElementById("popup").style.display = "flex";
+    }
+  }
 
   function validateEndGame() {
     let redMark = 0;
@@ -35,16 +69,17 @@ function Area3() {
 
     if (redMark >= 3 || blueMark >= 3) {
       myTimer.stop();
-
-      setTimeout(
-        () =>
-          red.score > blue.score
-            ? alert("Red Team Win!")
-            : red.score < blue.score
-            ? alert("Blue Team Win!")
-            : alert("Draw Game!"),
-        200
-      );
+      // document.getElementById("audio_winning").play();
+      displayWinner();
+      // setTimeout(
+      //   () =>
+      //     red.score > blue.score
+      //       ? alert("Red Team Win!")
+      //       : red.score < blue.score
+      //       ? alert("Blue Team Win!")
+      //       : alert("Draw Game!"),
+      //   0
+      // );
     }
   }
 
@@ -99,6 +134,9 @@ function Area3() {
     });
     red.areaThreeMark = 0;
     blue.areaThreeMark = 0;
+    document.getElementById("winner").innerHTML = "Winner Message";
+    document.getElementById("popup").style.display = "none";
+    document.getElementById("popup").style.backgroundColor = DEFAULT_HEXCODE;
 
     this.refresh();
     red.refreshScore();
@@ -161,13 +199,14 @@ function Area3() {
     }
   }
 
-  return { set, clear, clearAll, refresh, refreshBtn };
+  return { set, clear, clearAll, refresh, refreshBtn, displayWinner };
 }
 
 class Team {
   constructor(teamColor) {
     this.teamColor = teamColor;
     this.areaOneMark = 0;
+    this.areaOneDisplayMark = 0;
     this.areaTwoMark = 0;
     this.areaThreeMark = 0;
     this.score = 0;
@@ -175,14 +214,20 @@ class Team {
 
   refreshAreaOne() {
     document.getElementById(`area1_mark_${this.teamColor}`).innerHTML =
-      this.areaOneMark;
+      this.areaOneDisplayMark;
 
     document.getElementById(`area1_m_btn_${this.teamColor}`).disabled =
       this.areaOneMark === 0 || this.areaOneMark <= this.areaTwoMark
         ? true
         : false;
     document.getElementById(`area1_p_btn_${this.teamColor}`).disabled =
-      this.areaOneMark >= 12 ? true : false;
+      this.areaOneDisplayMark >= 12 ? true : false;
+
+    document.getElementById(`area1_p_d_btn_${this.teamColor}`).disabled =
+      this.areaOneDisplayMark >= 12 ? true : false;
+
+    document.getElementById(`area1_m_d_btn_${this.teamColor}`).disabled =
+      this.areaOneDisplayMark <= 0 ? true : false;
   }
 
   refreshAreaTwo() {
@@ -199,6 +244,7 @@ class Team {
 
   reset() {
     this.areaOneMark = 0;
+    this.areaOneDisplayMark = 0;
     this.areaTwoMark = 0;
     this.areaThreeMark = 0;
     this.score = 0;
@@ -214,24 +260,54 @@ class Team {
       this.score;
   }
 
+  areaOnePlusDisplay() {
+    if (this.areaOneDisplayMark < 12) {
+      this.areaOneDisplayMark++;
+      this.refreshAreaOne();
+    }
+  }
+
   areaOnePlus() {
     console.log(`${this.teamColor} Area 1 plus`);
-    if (this.areaOneMark < 12) {
+
+    if (this.areaOneDisplayMark < 12) {
       this.areaOneMark++;
+      this.areaOneDisplayMark++;
       this.refreshScore();
       this.refreshAreaOne();
       this.refreshAreaTwo();
     }
   }
 
+  areaOneMinusDisplay() {
+    if (this.areaOneDisplayMark > 0) {
+      this.areaOneDisplayMark--;
+      this.refreshAreaOne();
+    }
+  }
+
   areaOneMinus() {
     console.log(`${this.teamColor} Area 1 minus`);
-    if (this.areaOneMark > 0 && this.areaOneMark > this.areaTwoMark) {
+
+    if (this.areaOneDisplayMark > 0 && this.areaOneMark > this.areaTwoMark)
+      this.areaOneDisplayMark--;
+    if (this.areaOneMark > 0 && this.areaOneMark > this.areaTwoMark)
       this.areaOneMark--;
-      this.refreshScore();
-      this.refreshAreaOne();
-      this.refreshAreaTwo();
-    }
+
+    this.refreshScore();
+    this.refreshAreaOne();
+    this.refreshAreaTwo();
+
+    // if (
+    //   this.areaOneDisplayMark > 0 &&
+    //   this.areaOneDisplayMark > this.areaTwoMark
+    // ) {
+    //   this.areaOneDisplayMark--;
+    //   this.areaOneMark--;
+    //   this.refreshScore();
+    //   this.refreshAreaOne();
+    //   this.refreshAreaTwo();
+    // }
   }
 
   areaTwoPlus() {
@@ -257,17 +333,31 @@ class Team {
   }
 }
 
-function Timer(initSec) {
-  const _initSec = initSec;
+function Timer() {
+  const SETTING_SEC = 60;
+  const READY_SEC = 3;
+  const GAME_SEC = 180;
+  let _initSec = 0;
+  let _mode = null;
+  let _status = "init";
   let _currentSec = _initSec;
   let _currentInterval;
 
   function updateTimer() {
+    const timerEl = document.getElementById("timer");
     _currentSec--;
-    document.getElementById("timer").innerHTML = _currentSec;
-    if (_currentSec <= 5) {
+
+    if (_currentSec <= 0 && _mode == "ready") {
+      document.getElementById("audio_start").play();
+      _currentSec = GAME_SEC;
+      document.getElementById("timer").style.color = "black";
+      _mode = "game";
+    }
+
+    timerEl.innerHTML = _currentSec;
+    if (_currentSec <= 10) {
       if (_currentSec === 0) {
-        document.getElementById("audio_stop").play();
+        // document.getElementById("audio_winning").play();
       } else {
         document.getElementById("audio_beep").play();
       }
@@ -276,14 +366,39 @@ function Timer(initSec) {
     console.log("Update timer");
 
     if (_currentSec <= 0) {
-      console.log("Countdown end");
-      return stop();
+      console.log("Timer end");
+      _status = "init";
+      stop();
+      if (_mode !== "setting") {
+        area3.displayWinner();
+      } else {
+        document.getElementById("audio_start").play();
+      }
+      return;
     }
   }
 
-  function start() {
+  function start(inputMethod) {
+    if (_status == "init") {
+      if (inputMethod == "setting") {
+        _initSec = SETTING_SEC;
+        _mode = "setting";
+        _currentSec = _initSec;
+      } else if (inputMethod == "ready") {
+        console.log("ready mode");
+        _initSec = READY_SEC;
+        _mode = "ready";
+        _currentSec = _initSec;
+        document.getElementById("timer").style.color = "red";
+        document.getElementById("audio_beep").play();
+      }
+    }
+
+    // default action
+    _status = "start";
     if (_currentSec > 0) {
-      document.getElementById("gameTimer").disabled = true; // Disable Timer Start button
+      document.getElementById("game_start").disabled = true; // Disable Timer Start button
+      document.getElementById("setting_start").disabled = true;
       document.getElementById("timer").innerHTML = _currentSec;
 
       _currentInterval = setInterval(() => {
@@ -295,18 +410,27 @@ function Timer(initSec) {
   }
 
   function pause() {
+    _status = "pause";
     stop();
     console.log("Timer pause");
   }
 
   function stop() {
     clearInterval(_currentInterval);
-    document.getElementById("gameTimer").disabled = false; // Enable Timer Start button
+    if (_mode == "game" || _mode == "ready") {
+      document.getElementById("game_start").disabled = false; // Enable Timer Start button
+    } else if (_mode == "setting") {
+      document.getElementById("setting_start").disabled = false; // Enable Timer Start button
+    }
     document.getElementById("pause").disabled = true; // Disable Time Pause button
   }
 
   function reset() {
-    stop();
+    clearInterval(_currentInterval);
+    _status = "init";
+    document.getElementById("game_start").disabled = false; // Enable Timer Start button
+    document.getElementById("setting_start").disabled = false; // Enable Timer Start button
+    document.getElementById("pause").disabled = true; // Disable Time Pause button
     _currentSec = _initSec;
     document.getElementById("timer").innerHTML = "---"; // Reset Timer display value
     document.getElementById("timer").style.color = "black"; // Reset Timer text color
@@ -315,8 +439,53 @@ function Timer(initSec) {
   return { start, reset, pause, stop };
 }
 
-const myTimer = Timer(180);
+function OverlayTimer() {
+  const APPEAL_SEC = 30;
+  let _initSec = 0;
+  let _currentSec = _initSec;
+  let _currentInterval;
+
+  function update() {
+    const timerEl = document.getElementById("overlay-timer");
+    _currentSec--;
+
+    timerEl.innerHTML = _currentSec;
+    if (_currentSec <= 10) {
+      if (_currentSec === 0) {
+        document.getElementById("audio_start").play();
+      } else {
+        document.getElementById("audio_beep").play();
+      }
+      timerEl.style.color = "red";
+    }
+    console.log("Update overlay timer");
+
+    if (_currentSec <= 0) {
+      console.log("Overlay timer end");
+      return stop();
+    }
+  }
+
+  function stop() {
+    clearInterval(_currentInterval);
+  }
+
+  function start() {
+    _initSec = APPEAL_SEC;
+    _currentSec = _initSec;
+    const timerEl = document.getElementById("overlay-timer");
+    timerEl.style.color = "black";
+    timerEl.innerHTML = _currentSec;
+
+    _currentInterval = setInterval(() => update(), 1000);
+  }
+
+  return { start, stop };
+}
+
 const area3 = Area3();
+let myTimer = Timer();
+let myOverlayTimer = OverlayTimer();
 const red = new Team("red");
 const blue = new Team("blue");
 
@@ -327,8 +496,18 @@ function resetAll() {
   red.reset();
   blue.reset();
 }
-// ==============================================================
 
+function exitAppeal() {
+  myOverlayTimer.stop();
+  document.getElementById("overlay").style.display = "none";
+}
+
+function appeal() {
+  document.getElementById("overlay").style.display = "flex";
+  myOverlayTimer.start();
+}
+
+// ==============================================================
 function changeTeamLogo(teamColor) {
   var x;
 
@@ -346,26 +525,13 @@ function changeTeamLogo(teamColor) {
 function play(fld) {
   switch (fld) {
     case "beep":
-      var audio = document.getElementById("audio_beep");
+      audio_beep.play();
       break;
-    case "beep2":
-      var audio = document.getElementById("audio_beep2");
-      break;
-    case "stop":
-      var audio = document.getElementById("audio_stop");
-      break;
-    case "winning":
-      var audio = document.getElementById("audio_winning");
-      break;
-    case "winning2":
-      var audio = document.getElementById("audio_winning2");
-      break;
-    case "winning3":
-      var audio = document.getElementById("audio_winning3");
+    case "start":
+      audio_start.play();
       break;
     case "end":
-      var audio = document.getElementById("audio_end");
+      audio_end.play();
       break;
   }
-  audio.play();
 }

@@ -6,8 +6,23 @@ th {
   font-size: 16px;
 }
 
+div.area1-btn-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+div.area1-btn-container > button.sec-btn {
+  width: 100px;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  font-size: 1.5rem;
+  height: auto;
+}
+
 select#redTeamName {
-  background-color: #a83025;
+  /* background-color: #a83025; */
+  background-color: #ff0000;
   width: 200px;
   height: 120px;
   font-size: 40px;
@@ -17,8 +32,23 @@ select#redTeamName {
   font-family: tahoma, sans-serif;
 }
 
+select#redTeamName.small-font,
+select#blueTeamName.small-font {
+  font-size: 20px;
+}
+
+select#redTeamName.medium-font,
+select#blueTeamName.medium-font {
+  font-size: 30px;
+}
+
+option {
+  font-size: 1.5rem;
+}
+
 select#blueTeamName {
-  background-color: #264d7d;
+  /* background-color: #264d7d; */
+  background-color: #116fff;
   width: 200px;
   height: 120px;
   font-size: 40px;
@@ -60,12 +90,46 @@ td.area_title {
 }
 
 div.area {
+  position: relative;
   height: 100%;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   color: white;
+}
+
+div.overlay {
+  width: 100%;
+  height: 100%;
+  background-color: lightgray;
+  z-index: 9999;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+div.overlay > div.timer {
+  font-size: 500px;
+}
+
+div.overlay button.exit-btn {
+  font-size: 100px;
+  background-color: transparent;
+  border: 0.5rem solid gray;
+  border-radius: 20px;
+  color: gray;
+  padding: 0 2rem;
+}
+
+div.overlay button.exit-btn:hover {
+  border-color: black;
+  color: black;
+  cursor: pointer;
 }
 
 button.square-btn {
@@ -123,18 +187,25 @@ div.timer-container {
 }
 
 div.btn-container {
+  flex-direction: row;
+  flex-wrap: wrap;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 1rem;
   background-color: #48c9b0;
+  gap: 0.5rem;
 }
 
 div.btn-container > button {
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
+  flex: 1 1 calc(50% - 0.5rem);
+}
+
+div.btn-container > button {
+  /* margin-left: 0.5rem;
+  margin-right: 0.5rem; */
   height: 50px;
-  width: 70px;
+  /* width: 70px; */
 }
 
 div.timer {
@@ -163,11 +234,13 @@ div.timer {
 
 .area3-wrapper > div > div.block {
   height: 50px;
-  width: calc(50px * 1.618);
+  width: 50px;
+  /* width: calc(50px * 1.618); */
   display: inline-block;
   margin-right: 1rem;
   background-color: white;
   border: black 1px solid;
+  border-radius: 50%;
 }
 
 .area3-wrapper > div > button {
@@ -200,4 +273,28 @@ div.timer {
 .left-container {
   display: flex;
   flex-direction: column;
+}
+
+.popup {
+  z-index: 999;
+  top: 50%;
+  left: 50%;
+  height: 200px;
+  width: calc(200px * 1.618);
+  background-color: #f1c40f;
+  margin-top: -100px;
+  margin-left: calc(-200px * 1.618 / 2);
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  border: 0.5rem solid #3e2723;
+  display: none;
+  color: white;
+}
+
+.flex-container {
+  position: relative;
 }
