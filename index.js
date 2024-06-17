@@ -4,6 +4,17 @@ const RED_COLOR_HEXCODE = "#ff0000";
 const BLUE_COLOR_HEXCODE = "#116fff";
 const DEFAULT_HEXCODE = "#f1c40f";
 
+const AUDIO_BEEP = new Audio("files/beep.wav");
+const AUDIO_START = new Audio("files/start.wav");
+const AUDIO_WIN = new Audio("files/winning_v2.wav");
+const AUDIO_DRAW = new Audio("files/end.wav");
+const AUDIO_DING_DONG = new Audio("files/ding_dong.wav");
+AUDIO_BEEP.preload = "auto";
+AUDIO_START.preload = "auto";
+AUDIO_WIN.preload = "auto";
+AUDIO_DRAW.preload = "auto";
+let matchNo = 1;
+
 function Area3() {
   const blocks = [
     [null, null, null, null, null],
@@ -15,7 +26,8 @@ function Area3() {
     const result = red.score - blue.score;
     // red team win
     if (result > 0) {
-      document.getElementById("audio_winning").play();
+      // document.getElementById("audio_winning").play();
+      AUDIO_WIN.play();
       document.getElementById("winner").innerHTML = "Red Team Win!";
       document.getElementById("popup").style.backgroundColor =
         RED_COLOR_HEXCODE;
@@ -23,7 +35,8 @@ function Area3() {
     }
     // blue team win
     else if (result < 0) {
-      document.getElementById("audio_winning").play();
+      // document.getElementById("audio_winning").play();
+      AUDIO_WIN.play();
       document.getElementById("winner").innerHTML = "Blue Team Win!";
       document.getElementById("popup").style.backgroundColor =
         BLUE_COLOR_HEXCODE;
@@ -31,7 +44,8 @@ function Area3() {
     }
     // draw game
     else if (result == 0) {
-      document.getElementById("audio_draw").play();
+      // document.getElementById("audio_draw").play();
+      AUDIO_DRAW.play();
       document.getElementById("winner").innerHTML = "Draw Game!";
       document.getElementById("popup").style.backgroundColor = DEFAULT_HEXCODE;
       document.getElementById("popup").style.display = "flex";
@@ -348,7 +362,8 @@ function Timer() {
     _currentSec--;
 
     if (_currentSec <= 0 && _mode == "ready") {
-      document.getElementById("audio_start").play();
+      // document.getElementById("audio_start").play();
+      AUDIO_START.play();
       _currentSec = GAME_SEC;
       document.getElementById("timer").style.color = "black";
       _mode = "game";
@@ -359,7 +374,8 @@ function Timer() {
       if (_currentSec === 0) {
         // document.getElementById("audio_winning").play();
       } else {
-        document.getElementById("audio_beep").play();
+        // document.getElementById("audio_beep").play();
+        AUDIO_BEEP.play();
       }
       document.getElementById("timer").style.color = "red";
     }
@@ -372,7 +388,8 @@ function Timer() {
       if (_mode !== "setting") {
         area3.displayWinner();
       } else {
-        document.getElementById("audio_start").play();
+        // document.getElementById("audio_start").play();
+        AUDIO_START.play();
       }
       return;
     }
@@ -390,7 +407,8 @@ function Timer() {
         _mode = "ready";
         _currentSec = _initSec;
         document.getElementById("timer").style.color = "red";
-        document.getElementById("audio_beep").play();
+        // document.getElementById("audio_beep").play();
+        AUDIO_BEEP.play();
       }
     }
 
@@ -452,9 +470,12 @@ function OverlayTimer() {
     timerEl.innerHTML = _currentSec;
     if (_currentSec <= 10) {
       if (_currentSec === 0) {
-        document.getElementById("audio_start").play();
+        // document.getElementById("audio_start").play();
+        // AUDIO_START.play();
+        AUDIO_DING_DONG.play();
       } else {
-        document.getElementById("audio_beep").play();
+        // document.getElementById("audio_beep").play();
+        // AUDIO_BEEP.play();
       }
       timerEl.style.color = "red";
     }
@@ -489,6 +510,25 @@ let myOverlayTimer = OverlayTimer();
 const red = new Team("red");
 const blue = new Team("blue");
 
+$(window).on("load", function () {
+  console.log("loaded");
+  $("#match_no").text(matchNo);
+});
+
+function matchPlus() {
+  if (matchNo < 22) {
+    matchNo++;
+    $("#match_no").text(matchNo);
+  }
+}
+
+function matchMinus() {
+  if (matchNo > 1) {
+    matchNo--;
+    $("#match_no").text(matchNo);
+  }
+}
+
 function resetAll() {
   console.log("Reset All");
   area3.clearAll();
@@ -519,19 +559,5 @@ function changeTeamLogo(teamColor) {
     x = document.getElementById("blueTeamName").selectedIndex;
     document.getElementById("blueTeamLogo").src =
       "images/" + document.getElementsByTagName("option")[x].value;
-  }
-}
-
-function play(fld) {
-  switch (fld) {
-    case "beep":
-      audio_beep.play();
-      break;
-    case "start":
-      audio_start.play();
-      break;
-    case "end":
-      audio_end.play();
-      break;
   }
 }

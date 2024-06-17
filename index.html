@@ -43,20 +43,6 @@
 
 <body>
   <main>
-    <audio preload="auto" id="audio_beep">
-      <source src="files/beep.wav" type="audio/wav">
-    </audio>
-    <audio preload="auto" id="audio_start">
-      <source src="files/stop.wav" type="audio/wav">
-    </audio>
-    <audio preload="auto" id="audio_winning">
-      <source src="files/winning_v2.wav" type="audio/wav">
-    </audio>
-    <audio preload="auto" id="audio_draw">
-      <source src="files/end.wav" type="audio/wav">
-    </audio>
-
-
     <div id="overlay" class="overlay">
       <div id="overlay-timer" class="timer">---</div>
       <div><button class="exit-btn" onClick="exitAppeal()">EXIT</button></div>
@@ -65,24 +51,24 @@
     <div class="wrapper">
       <div class="left-container">
         <div class="timer-container">
-          <div id="appeal_timer">Timer</div>
+          <div id="appeal_timer">Countdown Timer</div>
           <div id="timer" class="timer">---</div>
           <div>sec</div>
         </div>
-        <div style="margin-top: 0;">
-          <div class="btn-container">
-            <button id="setting_start" onClick="myTimer.start('setting')">Setting</button>
-            <button id="game_start" onClick="myTimer.start('ready')">Game Start</button>
-            <button id="pause" onClick="myTimer.pause()" disabled>Pause</button>
-            <button id="reset" onClick="myTimer.reset()">Reset</button>
+        <div class="match-container">
+          <button onclick="matchMinus()">&#60;</button>
+          <div>Game <span id="match_no">-</span>
           </div>
+          <button onclick="matchPlus()">&#62;</button>
         </div>
-
-
-        <div class="reset-container">
+        <div class="btn-container">
+          <button id="setting_start" onClick="myTimer.start('setting')">Setting</button>
+          <button id="game_start" onClick="myTimer.start('ready')">Game</button>
+          <!-- <button id="pause" onClick="myTimer.pause()" disabled>Pause</button> -->
+          <button id="reset" onClick="myTimer.reset()">Reset</button>
           <button onClick="appeal()">Appeal</button>
           <button onClick="resetAll()">Reset All</button>
-          <button onClick="area3.clearAll()">Reset Area3</button>
+          <!-- <button onClick="area3.clearAll()">Reset Area3</button> -->
         </div>
       </div>
       <div class="flex-container">
@@ -164,76 +150,7 @@
             </td>
           </tr>
           <tr>
-            <td colspan="2" class="area_title">AREA 1</td>
-          </tr>
-          <tr>
-            <td bgcolor="#ff0000" valign="middle" align="center">
-              <div class="area">
-                <!-- <button style="position:absolute;top:0;left:0;">Reset</button> -->
-                <div class="area1-btn-container">
-                  <button id="area1_m_d_btn_red" class="square-btn" onClick="red.areaOneMinusDisplay()" disabled>
-                    -
-                  </button>
-                  <button id="area1_m_btn_red" class="sec-btn" onClick="red.areaOneMinus()" disabled>-</button>
-                </div>
-                <div id="area1_mark_red" class="area-mark">0</div>
-                <div class="area1-btn-container">
-                  <button id="area1_p_btn_red" class="square-btn" onClick="red.areaOnePlus()">
-                    +
-                  </button>
-                  <button id="area1_p_d_btn_red" class="sec-btn" onClick="red.areaOnePlusDisplay()">+</button>
-                </div>
-              </div>
-            </td>
-            <td bgcolor=" #116fff" valign="middle" align="center">
-              <div class="area">
-                <!-- <button style="position:absolute;top:0;left:0;">Reset</button> -->
-                <div class="area1-btn-container">
-                  <button id="area1_m_d_btn_blue" class="square-btn" onClick="blue.areaOneMinusDisplay()" disabled>
-                    -
-                  </button>
-                  <button id="area1_m_btn_blue" class="sec-btn" onClick="blue.areaOneMinus()" disabled>-</button>
-                </div>
-                <div id="area1_mark_blue" class="area-mark">0</div>
-                <div class="area1-btn-container">
-                  <button id="area1_p_btn_blue" class="square-btn" onClick="blue.areaOnePlus()">
-                    +
-                  </button>
-                  <button id="area1_p_d_btn_blue" class="sec-btn" onClick="blue.areaOnePlusDisplay()">+</button>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td colspan="2" class="area_title">AREA 2</td>
-          </tr>
-          <tr>
-            <td bgcolor="#ff0000" valign="middle" align="center">
-              <div class="area">
-                <button id="area2_m_btn_red" class="square-btn" onClick="red.areaTwoMinus()" disabled>
-                  -
-                </button>
-                <div id="area2_mark_red" class="area-mark">0</div>
-                <button id="area2_p_btn_red" class="square-btn" onClick="red.areaTwoPlus()" disabled>
-                  +
-                </button>
-              </div>
-            </td>
-            <td bgcolor="#116fff" valign="middle" align="center">
-              <div class="area">
-                <button id="area2_m_btn_blue" class="square-btn" onClick="blue.areaTwoMinus()" disabled>
-                  -
-                </button>
-                <div id="area2_mark_blue" class="area-mark">0</div>
-                <button id="area2_p_btn_blue" class="square-btn" onClick="blue.areaTwoPlus()" disabled>
-                  +
-                </button>
-              </div>
-            </td>
-          </tr>
-          </tr>
-          <tr>
-            <td colspan="2" class="area_title">AREA 3</td>
+            <td colspan="2" class="area_title">Storage</td>
           </tr>
           <tr>
             <td colspan="2">
@@ -321,6 +238,75 @@
                   <button id="area3-b4-red" onClick="area3.set('4','red')">Red</button>
                   <button id="area3-b4-blue" onClick="area3.set('4','blue')">Blue</button>
                 </div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" class="area_title">Harvesting</td>
+          </tr>
+          <tr>
+            <td bgcolor="#ff0000" valign="middle" align="center">
+              <div class="area">
+                <button id="area2_m_btn_red" class="square-btn" onClick="red.areaTwoMinus()" disabled>
+                  -
+                </button>
+                <div id="area2_mark_red" class="area-mark">0</div>
+                <button id="area2_p_btn_red" class="square-btn" onClick="red.areaTwoPlus()" disabled>
+                  +
+                </button>
+              </div>
+            </td>
+            <td bgcolor="#116fff" valign="middle" align="center">
+              <div class="area">
+                <button id="area2_m_btn_blue" class="square-btn" onClick="blue.areaTwoMinus()" disabled>
+                  -
+                </button>
+                <div id="area2_mark_blue" class="area-mark">0</div>
+                <button id="area2_p_btn_blue" class="square-btn" onClick="blue.areaTwoPlus()" disabled>
+                  +
+                </button>
+              </div>
+            </td>
+          </tr>
+          </tr>
+          <tr>
+            <td colspan="2" class="area_title">Planting</td>
+          </tr>
+          <tr>
+            <td bgcolor="#ff0000" valign="middle" align="center">
+              <div class="area">
+                <!-- <button style="position:absolute;top:0;left:0;">Reset</button> -->
+                <div class="area1-btn-container">
+                  <button id="area1_m_d_btn_red" class="square-btn" onClick="red.areaOneMinusDisplay()" disabled>
+                    -
+                  </button>
+                  <button id="area1_m_btn_red" class="sec-btn" onClick="red.areaOneMinus()" disabled>-</button>
+                </div>
+                <div id="area1_mark_red" class="area-mark">0</div>
+                <div class="area1-btn-container">
+                  <button id="area1_p_btn_red" class="square-btn" onClick="red.areaOnePlus()">
+                    +
+                  </button>
+                  <button id="area1_p_d_btn_red" class="sec-btn" onClick="red.areaOnePlusDisplay()">+</button>
+                </div>
+              </div>
+            </td>
+            <td bgcolor=" #116fff" valign="middle" align="center">
+              <div class="area">
+                <!-- <button style="position:absolute;top:0;left:0;">Reset</button> -->
+                <div class="area1-btn-container">
+                  <button id="area1_m_d_btn_blue" class="square-btn" onClick="blue.areaOneMinusDisplay()" disabled>
+                    -
+                  </button>
+                  <button id="area1_m_btn_blue" class="sec-btn" onClick="blue.areaOneMinus()" disabled>-</button>
+                </div>
+                <div id="area1_mark_blue" class="area-mark">0</div>
+                <div class="area1-btn-container">
+                  <button id="area1_p_btn_blue" class="square-btn" onClick="blue.areaOnePlus()">
+                    +
+                  </button>
+                  <button id="area1_p_d_btn_blue" class="sec-btn" onClick="blue.areaOnePlusDisplay()">+</button>
+                </div>
+              </div>
             </td>
           </tr>
 
