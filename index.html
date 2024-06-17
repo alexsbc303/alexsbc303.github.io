@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Robocon Hong Kong 2024 全港大專生機械人大賽</title>
+  <link rel="stylesheet" href="index.css" />
+  <link rel="stylesheet" href="fontawesome/css/all.css" />
+  <script type="text/javascript" src="js/jquery-3.7.1.min.js"></script>
+  <script type="text/javascript" src="index.js"></script>
+  <script>
+    $(document).on('change', "#redTeamName", function () {
+      let teamName = $(this).find(":selected").text();
+      if (teamName === '虎地特選3.6牛牛') {
+        $(this).removeClass('medium-font');
+        $(this).addClass('small-font');
+      }
+      else if (teamName === '紅彗星1號') {
+        $(this).addClass('medium-font');
+        $(this).removeClass('small-font');
+      } else {
+        $(this).removeClass('medium-font');
+        $(this).removeClass('small-font');
+      }
+    });
+
+    $(document).on('change', "#blueTeamName", function () {
+      let teamName = $(this).find(":selected").text();
+      if (teamName === '虎地特選3.6牛牛') {
+        $(this).removeClass('medium-font');
+        $(this).addClass('small-font');
+      }
+      else if (teamName === '紅彗星1號') {
+        $(this).addClass('medium-font');
+        $(this).removeClass('small-font');
+      } else {
+        $(this).removeClass('medium-font');
+        $(this).removeClass('small-font');
+      }
+    });
+  </script>
+</head>
+
+<body>
+  <main>
+    <div id="overlay" class="overlay">
+      <div id="overlay-timer" class="timer">---</div>
+      <div><button class="exit-btn" onClick="exitAppeal()">EXIT</button></div>
+    </div>
+
+    <div class="wrapper">
+      <div class="left-container">
+        <div class="timer-container">
+          <div id="appeal_timer">Countdown Timer</div>
+          <div id="timer" class="timer">---</div>
+          <div>sec</div>
+        </div>
+        <div class="match-container">
+          <button onclick="matchMinus()">&#60;</button>
+          <div>Game <span id="match_no">-</span>
+          </div>
+          <button onclick="matchPlus()">&#62;</button>
+        </div>
+        <div class="btn-container">
+          <button id="setting_start" onClick="myTimer.start('setting')">Setting</button>
+          <button id="game_start" onClick="myTimer.start('ready')">Game</button>
+          <!-- <button id="pause" onClick="myTimer.pause()" disabled>Pause</button> -->
+          <button id="reset" onClick="myTimer.reset()">Reset</button>
+          <button onClick="appeal()">Appeal</button>
+          <button onClick="resetAll()">Reset All</button>
+          <!-- <button onClick="area3.clearAll()">Reset Area3</button> -->
+        </div>
+      </div>
+      <div class="flex-container">
+        <div id="popup" class="popup">
+          <h1 id="winner">winner message</h1>
+        </div>
+
+        <table id="main_table" width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td width="50%" bgcolor="#ff0000" valign="top" align="center">
+              <table border="0" align="center" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                  <td align="left" width="20%">
+                    <img id="redTeamLogo" height="120" width="120" src="images/transparent.png" border="0"></img>
+                  </td>
+                  <td align="left">
+                    <select id="redTeamName" onchange="changeTeamLogo('red')">
+                      <option value="transparent.png">&nbsp;</option>
+                      <option value="lnu.jpg">虎地特選3.6牛牛</option>
+                      <option value="cuhk.jpg">長驅植進</option>
+                      <option value="ive.jpg">神機妙算</option>
+                      <option value="polyu.jpg">紅彗星1號</option>
+                      <option value="cityu.jpg">夢成真</option>
+                      <option value="hku.jpg">明德</option>
+                      <option value="hkust.jpg">火之龍</option>
+                      <option value="polyu.jpg">赤影</option>
+                      <option value="eduhk.jpg">魯師</option>
+                      <option value="cuhk.jpg">植搗黃農</option>
+                      <option value="hku.jpg">格物</option>
+                      <option value="cityu.jpg">夢一城</option>
+                      <option value="hkust.jpg">征龍</option>
+                      <option value="ive.jpg">逆境傳奇</option>
+                    </select>
+                  </td>
+                  <td align="center">
+                    <br>
+                    <font color="white">Total Score</font>
+                    <font color="white">
+                      <div id="redTeamScore" style="font-size:80px; font-weight:bold; width:150px;">0</div>
+                    </font>
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td width="50%" bgcolor="#116fff" valign="top" align="center">
+              <table border="0" align="center" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                  <td align="left" width="20%">
+                    <img id="blueTeamLogo" height="120" width="120" src="images/transparent.png" border="0"></img>
+                  </td>
+                  <td align="left">
+                    <select id="blueTeamName" onchange="changeTeamLogo('blue')">
+                      <option value="transparent.png">&nbsp;</option>
+                      <option value="lnu.jpg">虎地特選3.6牛牛</option>
+                      <option value="cuhk.jpg">長驅植進</option>
+                      <option value="ive.jpg">神機妙算</option>
+                      <option value="polyu.jpg">紅彗星1號</option>
+                      <option value="cityu.jpg">夢成真</option>
+                      <option value="hku.jpg">明德</option>
+                      <option value="hkust.jpg">火之龍</option>
+                      <option value="polyu.jpg">赤影</option>
+                      <option value="eduhk.jpg">魯師</option>
+                      <option value="cuhk.jpg">植搗黃農</option>
+                      <option value="hku.jpg">格物</option>
+                      <option value="cityu.jpg">夢一城</option>
+                      <option value="hkust.jpg">征龍</option>
+                      <option value="ive.jpg">逆境傳奇</option>
+                    </select>
+                  </td>
+                  <td align="center">
+                    <br>
+                    <font color="white">Total Score</font>
+                    <font color="white">
+                      <div id="blueTeamScore" style="font-size:80px; font-weight:bold; width:150px;">0</div>
+                    </font>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" class="area_title">Storage</td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <div class="area3-wrapper">
+                <!-- row 2 -->
+                <div>
+                  <div class="block" id="b-20"></div><button id="r-20" onClick="area3.clear(2,0)" disabled><i
+                      class="fas fa-undo-alt"></i></button>
+                </div>
+                <div>
+                  <div class="block" id="b-21"></div><button id="r-21" onClick="area3.clear(2,1)" disabled><i
+                      class="fas fa-undo-alt"></i></button>
+                </div>
+                <div>
+                  <div class="block" id="b-22"></div><button id="r-22" onClick="area3.clear(2,2)" disabled><i
+                      class="fas fa-undo-alt"></i></button>
+                </div>
+                <div>
+                  <div class="block" id="b-23"></div><button id="r-23" onClick="area3.clear(2,3)" disabled><i
+                      class="fas fa-undo-alt"></i></button>
+                </div>
+                <div>
+                  <div class="block" id="b-24"></div><button id="r-24" onClick="area3.clear(2,4)" disabled><i
+                      class="fas fa-undo-alt"></i></button>
+                </div>
+                <!-- row 1 -->
+                <div>
+                  <div class="block" id="b-10"></div><button id="r-10" onClick="area3.clear(1,0)" disabled><i
+                      class="fas fa-undo-alt"></i></button>
+                </div>
+                <div>
+                  <div class="block" id="b-11"></div><button id="r-11" onClick="area3.clear(1,1)" disabled><i
+                      class="fas fa-undo-alt"></i></button>
+                </div>
+                <div>
+                  <div class="block" id="b-12"></div><button id="r-12" onClick="area3.clear(1,2)" disabled><i
+                      class="fas fa-undo-alt"></i></button>
+                </div>
+                <div>
+                  <div class="block" id="b-13"></div><button id="r-13" onClick="area3.clear(1,3)" disabled><i
+                      class="fas fa-undo-alt"></i></button>
+                </div>
+                <div>
+                  <div class="block" id="b-14"></div><button id="r-14" onClick="area3.clear(1,4)" disabled><i
+                      class="fas fa-undo-alt"></i></button>
+                </div>
+                <!-- row 0 -->
+                <div>
+                  <div class="block" id="b-00"></div><button id="r-00" onClick="area3.clear(0,0)" disabled><i
+                      class="fas fa-undo-alt"></i></button>
+                </div>
+                <div>
+                  <div class="block" id="b-01"></div><button id="r-01" onClick="area3.clear(0,1)" disabled><i
+                      class="fas fa-undo-alt"></i></button>
+                </div>
+                <div>
+                  <div class="block" id="b-02"></div><button id="r-02" onClick="area3.clear(0,2)" disabled><i
+                      class="fas fa-undo-alt"></i></button>
+                </div>
+                <div>
+                  <div class="block" id="b-03"></div><button id="r-03" onClick="area3.clear(0,3)" disabled><i
+                      class="fas fa-undo-alt"></i></button>
+                </div>
+                <div>
+                  <div class="block" id="b-04"></div><button id="r-04" onClick="area3.clear(0,4)" disabled><i
+                      class="fas fa-undo-alt"></i></button>
+                </div>
+                <div class="selection">
+                  <button id="area3-b0-red" onClick="area3.set('0','red')">Red</button>
+                  <button id="area3-b0-blue" onClick="area3.set('0','blue')">Blue</button>
+                </div>
+                <div class="selection">
+                  <button id="area3-b1-red" onClick="area3.set('1','red')">Red</button>
+                  <button id="area3-b1-blue" onClick="area3.set('1','blue')">Blue</button>
+                </div>
+                <div class="selection">
+                  <button id="area3-b2-red" onClick="area3.set('2','red')">Red</button>
+                  <button id="area3-b2-blue" onClick="area3.set('2','blue')">Blue</button>
+                </div>
+                <div class="selection">
+                  <button id="area3-b3-red" onClick="area3.set('3','red')">Red</button>
+                  <button id="area3-b3-blue" onClick="area3.set('3','blue')">Blue</button>
+                </div>
+                <div class="selection">
+                  <button id="area3-b4-red" onClick="area3.set('4','red')">Red</button>
+                  <button id="area3-b4-blue" onClick="area3.set('4','blue')">Blue</button>
+                </div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" class="area_title">Harvesting</td>
+          </tr>
+          <tr>
+            <td bgcolor="#ff0000" valign="middle" align="center">
+              <div class="area">
+                <button id="area2_m_btn_red" class="square-btn" onClick="red.areaTwoMinus()" disabled>
+                  -
+                </button>
+                <div id="area2_mark_red" class="area-mark">0</div>
+                <button id="area2_p_btn_red" class="square-btn" onClick="red.areaTwoPlus()" disabled>
+                  +
+                </button>
+              </div>
+            </td>
+            <td bgcolor="#116fff" valign="middle" align="center">
+              <div class="area">
+                <button id="area2_m_btn_blue" class="square-btn" onClick="blue.areaTwoMinus()" disabled>
+                  -
+                </button>
+                <div id="area2_mark_blue" class="area-mark">0</div>
+                <button id="area2_p_btn_blue" class="square-btn" onClick="blue.areaTwoPlus()" disabled>
+                  +
+                </button>
+              </div>
+            </td>
+          </tr>
+          </tr>
+          <tr>
+            <td colspan="2" class="area_title">Planting</td>
+          </tr>
+          <tr>
+            <td bgcolor="#ff0000" valign="middle" align="center">
+              <div class="area">
+                <!-- <button style="position:absolute;top:0;left:0;">Reset</button> -->
+                <div class="area1-btn-container">
+                  <button id="area1_m_d_btn_red" class="square-btn" onClick="red.areaOneMinusDisplay()" disabled>
+                    -
+                  </button>
+                  <button id="area1_m_btn_red" class="sec-btn" onClick="red.areaOneMinus()" disabled>-(adj)</button>
+                </div>
+                <div id="area1_mark_red" class="area-mark">0</div>
+                <div class="area1-btn-container">
+                  <button id="area1_p_btn_red" class="square-btn" onClick="red.areaOnePlus()">
+                    +
+                  </button>
+                  <button id="area1_p_d_btn_red" class="sec-btn" onClick="red.areaOnePlusDisplay()">+(adj)</button>
+                </div>
+              </div>
+            </td>
+            <td bgcolor=" #116fff" valign="middle" align="center">
+              <div class="area">
+                <!-- <button style="position:absolute;top:0;left:0;">Reset</button> -->
+                <div class="area1-btn-container">
+                  <button id="area1_m_d_btn_blue" class="square-btn" onClick="blue.areaOneMinusDisplay()" disabled>
+                    -
+                  </button>
+                  <button id="area1_m_btn_blue" class="sec-btn" onClick="blue.areaOneMinus()" disabled>-(adj)</button>
+                </div>
+                <div id="area1_mark_blue" class="area-mark">0</div>
+                <div class="area1-btn-container">
+                  <button id="area1_p_btn_blue" class="square-btn" onClick="blue.areaOnePlus()">
+                    +
+                  </button>
+                  <button id="area1_p_d_btn_blue" class="sec-btn" onClick="blue.areaOnePlusDisplay()">+(adj)</button>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+        </table>
+      </div>
+    </div>
+  </main>
+</body>
+
+</html>
