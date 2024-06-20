@@ -7,6 +7,10 @@
   <link rel="stylesheet" href="index.css" />
   <link rel="stylesheet" href="fontawesome/css/all.css" />
   <script type="text/javascript" src="js/jquery-3.7.1.min.js"></script>
+  <script type="text/javascript" src="js/GameTimer.js"></script>
+  <script type="text/javascript" src="js/OverlayTimer.js"></script>
+  <script type="text/javascript" src="js/Team.js"></script>
+  <script type="text/javascript" src="js/Area3.js"></script>
   <script type="text/javascript" src="index.js"></script>
   <script>
     $(document).on('change', "#redTeamName", function () {
@@ -48,24 +52,27 @@
       <div><button class="exit-btn" onClick="exitAppeal()">EXIT</button></div>
     </div>
 
-    <div class="wrapper">
+    <div id="wrapper" class="wrapper">
       <div class="left-container">
         <div class="timer-container">
           <div id="appeal_timer">Countdown Timer</div>
-          <div id="timer" class="timer">---</div>
+          <!-- <div id="timer" class="timer"> -->
+          <div class="timer">
+            <span id="timer">---</span>
+          </div>
           <div>sec</div>
         </div>
         <div class="match-container">
           <button onclick="matchMinus()">&#60;</button>
-          <div>Game <span id="match_no">-</span>
+          <div style="cursor: pointer;" onclick="switchRematch()">Game <span id="match_no">-</span>
+            <div id="rematch" style="display:none;font-size:28px;text-align: center;">&lt;Re-match&gt; </div>
           </div>
           <button onclick="matchPlus()">&#62;</button>
         </div>
         <div class="btn-container">
-          <button id="setting_start" onClick="myTimer.start('setting')">Setting</button>
-          <button id="game_start" onClick="myTimer.start('ready')">Game</button>
-          <!-- <button id="pause" onClick="myTimer.pause()" disabled>Pause</button> -->
-          <button id="reset" onClick="myTimer.reset()">Reset</button>
+          <button id="setting_start" onClick="startTickerSetting()">Setting</button>
+          <button id="game_start" onClick="startTickerGame()">Game</button>
+          <button id="reset" onClick="gameTimer.reset()">Reset</button>
           <button onClick="appeal()">Appeal</button>
           <button onClick="resetAll()">Reset All</button>
           <!-- <button onClick="area3.clearAll()">Reset Area3</button> -->
@@ -74,6 +81,7 @@
       <div class="flex-container">
         <div id="popup" class="popup">
           <h1 id="winner">winner message</h1>
+          <h2 id="end-timestamp">- - -</h2>
         </div>
 
         <table id="main_table" width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
@@ -276,43 +284,46 @@
               <div class="area">
                 <!-- <button style="position:absolute;top:0;left:0;">Reset</button> -->
                 <div class="area1-btn-container">
-                  <button id="area1_m_d_btn_red" class="square-btn" onClick="red.areaOneMinusDisplay()" disabled>
+                  <button id="area1_m_btn_red" class="square-btn" onClick="red.areaOneMinus()" disabled>
                     -
                   </button>
-                  <button id="area1_m_btn_red" class="sec-btn" onClick="red.areaOneMinus()" disabled>-(adj)</button>
+                  <!-- <button id="area1_m_btn_red" class="sec-btn" onClick="red.areaOneMinus()" disabled>-(adj)</button> -->
                 </div>
                 <div id="area1_mark_red" class="area-mark">0</div>
                 <div class="area1-btn-container">
                   <button id="area1_p_btn_red" class="square-btn" onClick="red.areaOnePlus()">
                     +
                   </button>
-                  <button id="area1_p_d_btn_red" class="sec-btn" onClick="red.areaOnePlusDisplay()">+(adj)</button>
+                  <!-- <button id="area1_p_d_btn_red" class="sec-btn" onClick="red.areaOnePlusDisplay()">+(adj)</button> -->
                 </div>
               </div>
+              <div id="red-planting-timestamp" class="planting-timestamp">- - -</div>
             </td>
             <td bgcolor=" #116fff" valign="middle" align="center">
               <div class="area">
                 <!-- <button style="position:absolute;top:0;left:0;">Reset</button> -->
                 <div class="area1-btn-container">
-                  <button id="area1_m_d_btn_blue" class="square-btn" onClick="blue.areaOneMinusDisplay()" disabled>
+                  <button id="area1_m_btn_blue" class="square-btn" onClick="blue.areaOneMinus()" disabled>
                     -
                   </button>
-                  <button id="area1_m_btn_blue" class="sec-btn" onClick="blue.areaOneMinus()" disabled>-(adj)</button>
+                  <!-- <button id="area1_m_btn_blue" class="sec-btn" onClick="blue.areaOneMinus()" disabled>-(adj)</button> -->
                 </div>
                 <div id="area1_mark_blue" class="area-mark">0</div>
                 <div class="area1-btn-container">
                   <button id="area1_p_btn_blue" class="square-btn" onClick="blue.areaOnePlus()">
                     +
                   </button>
-                  <button id="area1_p_d_btn_blue" class="sec-btn" onClick="blue.areaOnePlusDisplay()">+(adj)</button>
+                  <!-- <button id="area1_p_d_btn_blue" class="sec-btn" onClick="blue.areaOnePlusDisplay()">+(adj)</button> -->
                 </div>
               </div>
+              <div id="blue-planting-timestamp" class="planting-timestamp">- - -</div>
             </td>
           </tr>
 
         </table>
       </div>
     </div>
+
   </main>
 </body>
 

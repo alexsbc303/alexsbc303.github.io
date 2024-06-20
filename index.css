@@ -126,11 +126,11 @@ div.area {
 }
 
 div.overlay {
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   background-color: lightgray;
   z-index: 9999;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   display: none;
@@ -140,11 +140,11 @@ div.overlay {
 }
 
 div.overlay > div.timer {
-  font-size: 500px;
+  font-size: 400px;
 }
 
 div.overlay button.exit-btn {
-  font-size: 100px;
+  font-size: 80px;
   background-color: transparent;
   border: 0.5rem solid gray;
   border-radius: 20px;
@@ -170,7 +170,7 @@ button.square-btn {
 div.wrapper {
   padding: 0.5rem;
   display: grid;
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: 300px auto;
   grid-column-gap: 0.5rem;
   grid-row-gap: 0.5rem;
   background-color: #3e2723;
@@ -199,9 +199,10 @@ body {
   padding: 1rem;
   background-color: #48c9b0;
   gap: 0.5rem;
-  font-size: 50px;
+  font-size: 40px;
   font-style: bold;
   color: white;
+  text-align: center;
 }
 
 .match-container > button {
@@ -331,4 +332,10 @@ div.btn-container > button {
 
 .flex-container {
   position: relative;
+}
+
+.planting-timestamp {
+  font-size: 1.2rem;
+  font-weight: normal;
+  color: white;
 }
