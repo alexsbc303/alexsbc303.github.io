@@ -6,7 +6,7 @@ const BLUE_COLOR_HEXCODE = "#116fff";
 const DEFAULT_HEXCODE = "#f1c40f";
 const SETTING_MILLISEC = 30000;
 const READY_MILLISEC = 3000;
-const GAME_MILLISEC = 180000;
+const GAME_MILLISEC = 15000;
 
 const AUDIO_BEEP = new Audio("files/beep.wav");
 const AUDIO_START = new Audio("files/start.wav");

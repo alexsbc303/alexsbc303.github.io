@@ -55,6 +55,7 @@ class Team {
     this.areaThreeMark = 0;
     this.score = 0;
     this._gameStartTimestamp = null;
+    this.firstPlantingTimestamp = null;
     this.refreshScore();
     this.refreshAreaOne();
     this.refreshAreaTwo();

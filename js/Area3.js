@@ -122,6 +122,8 @@ function Area3() {
 
     // Determine if win by gain score of planting
     console.log("Determine gains score...");
+    console.log("Red firstPlantingTimestamp:", red.firstPlantingTimestamp);
+    console.log("Blue firstPlantingTimestamp:", blue.firstPlantingTimestamp);
     if (red.firstPlantingTimestamp < blue.firstPlantingTimestamp) {
       AUDIO_WIN.play();
       document.getElementById("winner").innerHTML = "Red Team Win!";
