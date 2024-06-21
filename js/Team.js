@@ -17,12 +17,19 @@ class Team {
     console.log("Refresh Area One");
     // no outer mark and inner mark logic
     $(`#area1_mark_${this.teamColor}`).text(this.areaOneMark);
+
+    // without logic
     $(`#area1_m_btn_${this.teamColor}`).prop(
       "disabled",
-      this.areaOneMark === 0 || this.areaOneMark <= this.areaTwoMark
-        ? true
-        : false
+      this.areaOneMark === 0 ? true : false
     );
+    // with logic
+    // $(`#area1_m_btn_${this.teamColor}`).prop(
+    //   "disabled",
+    //   this.areaOneMark === 0 || this.areaOneMark <= this.areaTwoMark
+    //     ? true
+    //     : false
+    // );
     $(`#area1_p_btn_${this.teamColor}`).prop(
       "disabled",
       this.areaOneMark >= 12 ? true : false
@@ -43,10 +50,16 @@ class Team {
 
     document.getElementById(`area2_m_btn_${this.teamColor}`).disabled =
       this.areaTwoMark === 0 ? true : false;
+
+    // without logic
     document.getElementById(`area2_p_btn_${this.teamColor}`).disabled =
-      this.areaTwoMark >= 12 || this.areaTwoMark >= this.areaOneMark
-        ? true
-        : false;
+      this.areaTwoMark >= 12 ? true : false;
+
+    // with logic
+    // document.getElementById(`area2_p_btn_${this.teamColor}`).disabled =
+    //   this.areaTwoMark >= 12 || this.areaTwoMark >= this.areaOneMark
+    //     ? true
+    //     : false;
   }
 
   reset() {
@@ -71,6 +84,7 @@ class Team {
 
   areaOnePlus() {
     console.log(`${this.teamColor} Area 1 plus`);
+
     if (this.areaOneMark < 12) {
       this.areaOneMark++;
       if (this.areaOneMark === 1) this.firstPlantingTimestamp = Date.now();
@@ -83,9 +97,11 @@ class Team {
 
   areaOneMinus() {
     console.log(`${this.teamColor} Area 1 minus`);
+    if (this.areaOneMark > 0) this.areaOneMark--;
 
-    if (this.areaOneMark > 0 && this.areaOneMark > this.areaTwoMark)
-      this.areaOneMark--;
+    // with logic
+    // if (this.areaOneMark > 0 && this.areaOneMark > this.areaTwoMark)
+    //   this.areaOneMark--;
 
     if (this.areaOneMark === 0) this.firstPlantingTimestamp = null;
     this.refreshScore();
@@ -95,23 +111,45 @@ class Team {
 
   areaTwoPlus() {
     console.log(`${this.teamColor} Area 2 plus`);
-    if (this.areaTwoMark < this.areaOneMark) {
+
+    // without logic
+    if (this.areaTwoMark < 12) {
       this.areaTwoMark++;
       this.refreshScore();
       this.refreshAreaOne();
       this.refreshAreaTwo();
       area3.refreshBtn();
     }
+
+    // with logic
+    // if (this.areaTwoMark < this.areaOneMark) {
+    //   this.areaTwoMark++;
+    //   this.refreshScore();
+    //   this.refreshAreaOne();
+    //   this.refreshAreaTwo();
+    //   area3.refreshBtn();
+    // }
   }
 
   areaTwoMinus() {
     console.log(`${this.teamColor} Area 2 minus`);
-    if (this.areaTwoMark <= this.areaOneMark && this.areaTwoMark > 0) {
+
+    // without logic
+    if (this.areaTwoMark > 0) {
       this.areaTwoMark--;
       this.refreshScore();
       this.refreshAreaOne();
       this.refreshAreaTwo();
       area3.refreshBtn();
     }
+
+    // with logic
+    // if (this.areaTwoMark <= this.areaOneMark && this.areaTwoMark > 0) {
+    //   this.areaTwoMark--;
+    //   this.refreshScore();
+    //   this.refreshAreaOne();
+    //   this.refreshAreaTwo();
+    //   area3.refreshBtn();
+    // }
   }
 }
