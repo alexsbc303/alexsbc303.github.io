@@ -139,6 +139,9 @@ function Area3() {
       document.getElementById("popup").style.display = "flex";
       return;
     }
+
+    console.log("Wait DOJ...");
+    AUDIO_DRAW.play();
   }
 
   function validateMuaVang() {

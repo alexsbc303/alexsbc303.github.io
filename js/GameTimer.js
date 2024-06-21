@@ -5,13 +5,15 @@ function GameTimer() {
 
   function start(milliseconds, timesupCb = undefined) {
     if (_timeout) clearTimeout(_timeout);
+
     _timesupCb = timesupCb;
     _milliseconds = milliseconds;
     _expected = Date.now() + _interval;
     $("#timer").text(_milliseconds / 1000);
+
+    AUDIO_BEEP.play();
     if (_milliseconds <= 10000 && _milliseconds > 0) {
       $("#timer").css("color", "red");
-      AUDIO_BEEP.play();
     } else {
       $("#timer").css("color", "black");
     }
@@ -27,6 +29,7 @@ function GameTimer() {
 
   const step = () => {
     console.log("NewTimer stepped");
+
     let drift = Date.now() - _expected;
     console.log("drift:", drift);
 
@@ -38,8 +41,8 @@ function GameTimer() {
     _milliseconds -= _interval;
 
     if (_milliseconds <= 10000 && _milliseconds > 0) {
-      $("#timer").css("color", "red");
       AUDIO_BEEP.play();
+      $("#timer").css("color", "red");
     } else {
       $("#timer").css("color", "black");
     }

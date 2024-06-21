@@ -4,14 +4,14 @@
 const RED_COLOR_HEXCODE = "#ff0000";
 const BLUE_COLOR_HEXCODE = "#116fff";
 const DEFAULT_HEXCODE = "#f1c40f";
-const SETTING_MILLISEC = 30000;
+const SETTING_MILLISEC = 60000;
 const READY_MILLISEC = 3000;
 const GAME_MILLISEC = 180000;
 
 const AUDIO_BEEP = new Audio("files/beep.wav");
 const AUDIO_START = new Audio("files/start.wav");
 const AUDIO_WIN = new Audio("files/win.wav");
-const AUDIO_MUA_VANG_WIN = new Audio("files/mua_vang_win.wav");
+const AUDIO_MUA_VANG_WIN = new Audio("files/mua_vang_v2.wav");
 const AUDIO_DRAW = new Audio("files/draw_game.wav");
 const AUDIO_DING_DONG = new Audio("files/ding_dong.wav");
 AUDIO_BEEP.preload = "auto";
@@ -94,6 +94,65 @@ function appeal() {
   });
 }
 
+$(document).on("keydown", function (e) {
+  console.log(e.which);
+  // q
+  if (e.which == 81) {
+    e.preventDefault();
+    console.log("a fired");
+    red.areaTwoMinus();
+    return;
+  }
+  // e
+  if (e.which == 69) {
+    e.preventDefault();
+    console.log("s fired");
+    red.areaTwoPlus();
+    return;
+  }
+  // a
+  if (e.which == 65) {
+    e.preventDefault();
+    console.log("a fired");
+    red.areaOneMinus();
+    return;
+  }
+  // d
+  if (e.which == 68) {
+    e.preventDefault();
+    console.log("s fired");
+    red.areaOnePlus();
+    return;
+  }
+  // u
+  if (e.which == 85) {
+    e.preventDefault();
+    console.log("a fired");
+    blue.areaTwoMinus();
+    return;
+  }
+  // o
+  if (e.which == 79) {
+    e.preventDefault();
+    console.log("s fired");
+    blue.areaTwoPlus();
+    return;
+  }
+  // j
+  if (e.which == 74) {
+    e.preventDefault();
+    console.log("a fired");
+    blue.areaOneMinus();
+    return;
+  }
+  // l
+  if (e.which == 76) {
+    e.preventDefault();
+    console.log("s fired");
+    blue.areaOnePlus();
+    return;
+  }
+});
 // ==============================================================
 function changeTeamLogo(teamColor) {
   var x;
